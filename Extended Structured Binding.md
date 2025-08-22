@@ -89,16 +89,18 @@ for (auto [token, value] = scan(); token != EOF; auto [&token, &value] = scan())
 
 **2. Hybrid Declaration and Assignment**
 
-```
+```cpp
 Age age;
-
-MyTuple<Age, Height> get_info(); // pure function
-
+MyTuple<Age, Height> get_info(); 
 auto [&age, height] = get_info(); // `age` is assigned, `height` is declared.
+```
 
-// This is equivalent to:
-// age = std::get<0>(get_info());
-// Height height = std::get<1>(get_info());
+The closest equivalent is:
+
+```cpp
+auto& info = get_info();
+age = std::get<0>(info);
+auto height = std::get<1>(info);
 ```
 
 ----------
