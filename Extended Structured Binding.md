@@ -43,22 +43,20 @@ This proposal aims to address these issues by extending structured binding synta
 
 Extend structured binding syntax to optinally use the `&` symbol for elements in the _sb-identifier-list_ inside the binding list to denote a binding to an existing variable.
 
-The main difference from current syntax is the ability to use `&` before a variable name in the structured binding list to indicate that the variable is already declared and should be assigned to and not initialized.<br>
-**Example**
+The main difference from current syntax is the ability to use `&` before an identifier name in the structured binding list to indicate that the identifier is already declared and should be assigned to and not initialized:<br>
 ```
 int x;
-auto [&x, y] = get_pair(); // y is a new variable, x is assigned to
+auto [&x, y] = get_pair(); // y is a new identifier, x is assigned to
 ```
 
-**Explanation:**
+**Rational**
 
-The `&` symbol already signifies a reference in C++. By allowing it inside the structured binding list, we can extend this meaning to "referencing an existing variable in the scope." This approach is intuitive and consistent with C++'s syntax for references.
+The `&` symbol already signifies a reference in C++. By allowing it inside the structured binding list, we can extend this meaning to "referencing an existing variable in the scope." 
+This approach is intuitive and consistent with C++'s syntax for references.
+Specifically it is consistent with lambda captures, where `&` indicates capturing by reference.
+See also the [Alternative Syntaxes Considered](#alternative-syntaxes-considered) section below for other syntaxes considered.
 
-When an existing variable is prefixed with `&`, the compiler would find the variable in the current scope and assign the corresponding element of the tuple-like object to it using `operator=`. The `auto` keyword at the beginning of the statement would signal that this is a structured binding operation.
-
-----------
-
-### Examples
+### Comparison Examples
 <table><tr>
 <th class="col-6" >Before</th>
 <th class="col-6" >After</th></tr>
